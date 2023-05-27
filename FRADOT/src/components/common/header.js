@@ -8,8 +8,12 @@ const Header = () => {
         router.push("/");
     };
 
-    const mapBtn = () => {
+    const map1Btn = () => {
         router.push("/map1");
+    };
+
+    const map2Btn = () => {
+        router.push("/map2");
     };
 
     const aboutBtn = () => {
@@ -19,13 +23,13 @@ const Header = () => {
     return (
         <HeaderWrap>
             <HeaderDiv>
-                <Img onClick={homeBtn}></Img>
+                <Img onClick={homeBtn} isHeaderLogo></Img>
 
                 <Menu2>
-                    <p onClick={mapBtn}>동네찾기</p>
+                    <p onClick={map1Btn}>동네찾기</p>
                 </Menu2>
                 <Menu2>
-                    <p>인프라 찾기</p>
+                    <p onClick={map2Btn}>인프라 찾기</p>
                 </Menu2>
                 <Menu2>
                     <p onClick={aboutBtn}>About us</p>

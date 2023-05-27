@@ -8,7 +8,7 @@ const mapHeader = () => {
         router.push("/");
     };
 
-    const mapBtn = () => {
+    const map1Btn = () => {
         router.push("/map1");
     };
 
@@ -26,7 +26,7 @@ const mapHeader = () => {
                 <Img onClick={homeBtn}></Img>
 
                 <Menu2>
-                    <p onClick={mapBtn}>동네찾기</p>
+                    <p onClick={map1Btn}>동네찾기</p>
                 </Menu2>
                 <Menu2>
                     <p onClick={map2Btn}>인프라 찾기</p>
