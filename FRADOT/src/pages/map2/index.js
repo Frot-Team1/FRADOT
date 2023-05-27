@@ -1,12 +1,26 @@
 import axios from "axios";
-import geojson from "../../../public/coords.json";
+// import geojson from "../../../public/coords.json";
+import geojson from "../../../public/seoul.json";
 import { Spin } from "antd";
 import { IoMdCloseCircle } from "react-icons/io";
 import { CgMenuRound } from "react-icons/cg";
 import { useEffect, useState, useRef } from "react";
-import Layout from "../../components/common/mapLayout";
+import MapLayOut from "../../components/common/mapLayout";
 import { CustomOverlayMap, Map, Polygon, MapMarker } from "react-kakao-maps-sdk";
-import { CateTitle, Category, CloseBtn, Container, DivArea, Infra, MapWrap, MenuBtn, Search, SideBar, SideWrap, WaitBox } from "@/styles/map1.styles";
+import {
+    CateTitle,
+    Category,
+    CloseBtn,
+    Container,
+    DivArea,
+    Infra,
+    MapWrap,
+    MenuBtn,
+    Search,
+    SideBar,
+    SideWrap,
+    WaitBox,
+} from "@/styles/map1.styles";
 
 const map = () => {
     let sideBar = useRef(null);
@@ -79,6 +93,7 @@ const map = () => {
     const [dongInfo, setDongInfo] = useState([]); // 동의 폴리곤 정보들이 다 들어있음
     const [markers, setmarkers] = useState([]); // 지도에 최종적으로 띄울 동의 폴리곤 정보 넣어줄 배열
     const [selectedDong, setSelectedDong] = useState([]);
+    const [seoulData, setSeoulData] = useState([]);
     const [mousePosition, setMousePosition] = useState({
         lat: 0,
         lng: 0,
@@ -166,32 +181,52 @@ const map = () => {
     // json 파일 데이터들의
     // 폴리곤좌표(positions), 동이름(dongName), isMouseover를 객체 형태로 dongInfo 배열에 저장
     // (동 지도 그리기 위해)
+    // useEffect(() => {
+    //     if (!map) return;
+
+    //     const data = geojson.features; // 각 동의 폴리곤 좌표 및 이름 정보가 담긴 배열
+    //     let dongContents = []; // 각 동 정보 객체 넣어줄 배열
+
+    //     data.forEach((dong) => {
+    //         let coordinates = dong.geometry.coordinates[0]; // 폴리곤 좌표들 담긴 배열
+
+    //         let content = {}; // dongContents에 넣어줄 각 동 정보 객체
+    //         content.positions = []; // 폴리곤 좌표 value
+    //         content.dongName = dong.properties.EMD_NM; // 동 이름 value
+    //         content.isMouseover = false; // 마우스 오버 이벤트 위한 value
+
+    //         coordinates.forEach((coord) => {
+    //             // 각 동의 각 폴리곤 좌표를 content.positions에 객체로 형태로 넣어줌
+    //             content.positions.push({
+    //                 lat: coord[1],
+    //                 lng: coord[0],
+    //             });
+    //         });
+
+    //         dongContents.push(content);
+    //     });
+
+    //     setDongInfo(dongContents);
+    // }, [map]);
+
     useEffect(() => {
         if (!map) return;
 
-        const data = geojson.features; // 각 동의 폴리곤 좌표 및 이름 정보가 담긴 배열
-        let dongContents = []; // 각 동 정보 객체 넣어줄 배열
+        const data = geojson.features[0].geometry.coordinates[0];
 
-        data.forEach((dong) => {
-            let coordinates = dong.geometry.coordinates[0]; // 폴리곤 좌표들 담긴 배열
+        let contents = [];
 
-            let content = {}; // dongContents에 넣어줄 각 동 정보 객체
-            content.positions = []; // 폴리곤 좌표 value
-            content.dongName = dong.properties.EMD_NM; // 동 이름 value
-            content.isMouseover = false; // 마우스 오버 이벤트 위한 value
-
-            coordinates.forEach((coord) => {
-                // 각 동의 각 폴리곤 좌표를 content.positions에 객체로 형태로 넣어줌
-                content.positions.push({
-                    lat: coord[1],
-                    lng: coord[0],
-                });
+        data.forEach((pos) => {
+            contents.push({
+                lat: pos[1],
+                lng: pos[0],
             });
-
-            dongContents.push(content);
         });
 
-        setDongInfo(dongContents);
+        // console.log(contents);
+        // console.log(contents.length);
+
+        setSeoulData(contents);
     }, [map]);
 
     // 로딩 창 띄우기
@@ -228,7 +263,7 @@ const map = () => {
                             lng: parseFloat(location.x),
                         },
                     });
-                    console.log(info);
+                    // console.log(info);
                 } else {
                     info.push({
                         gu: location.road_address.region_2depth_name,
@@ -260,7 +295,7 @@ const map = () => {
     };
 
     const infraBtnClick = (cnt, type) => {
-        console.log("Info배열 확인", dataType[type]);
+        // console.log("Info배열 확인", dataType[type]);
         // cnt가 0인경우 (type이 안골라진 경우)
         if (!cnt) {
             setDisplay("block");
@@ -282,6 +317,8 @@ const map = () => {
             // 버튼 배경색, 글자색 변경
             typeBtn[type].current.style.backgroundColor = "#756bff";
             typeBtn[type].current.style.color = "white";
+            typeBtn[type].current.style.boxShadow =
+                "1px 2px 0px 1px rgba(165, 165, 165, 0.09), 2px 3px 0px 0px rgb(26 26 26 / 19%) inset";
 
             // cnt +1 해주기
             btn[type][3].current++;
@@ -294,6 +331,7 @@ const map = () => {
             // 버튼 배경색, 글자색 변경
             typeBtn[type].current.style.backgroundColor = "white";
             typeBtn[type].current.style.color = "black";
+            typeBtn[type].current.style.boxShadow = "1px 2px 0px 1px rgb(165 165 165 / 9%), 2px 2px 0px 0 rgb(137 137 137 / 19%)";
 
             // cnt 0으로 만들기
             btn[type][3].current--;
@@ -306,50 +344,50 @@ const map = () => {
     };
 
     // 배열 값 확인
-    const click1 = () => {
-        console.log("type배열 확인", selectedType);
-        console.log("신입 Info 데이터 확인", libInfo);
-    };
+    // const click1 = () => {
+    //     console.log("type배열 확인", selectedType);
+    //     console.log("신입 Info 데이터 확인", libInfo);
+    // };
 
-    const click2 = () => {
-        let filteredDong = [];
-        if (selectedType) {
-            selectedType.forEach((type) => {
-                console.log("type foreach 돌아가는지 확인", type, dataType[type]);
-                // console.log("donhInfo 배열확인", dongInfo);
+    // const click2 = () => {
+    //     let filteredDong = [];
+    //     if (selectedType) {
+    //         selectedType.forEach((type) => {
+    //             console.log("type foreach 돌아가는지 확인", type, dataType[type]);
+    //             // console.log("donhInfo 배열확인", dongInfo);
 
-                // console.log("확인", dataType[type])
+    //             // console.log("확인", dataType[type])
 
-                if (!filteredDong.length) {
-                    console.log("if문 들어오기 확인");
-                    dataType[type].forEach((infraInfo) => {
-                        dongInfo.forEach((dInfo) => {
-                            if (infraInfo.dong.includes(dInfo.dongName)) {
-                                filteredDong.push(dInfo);
-                            }
-                        });
-                    });
-                    filteredDong = [...new Set(filteredDong)];
-                    console.log("filteredDong 확인", filteredDong);
-                } else {
-                    console.log("else들어오기 확인");
-                    let temp = [];
-                    dataType[type].forEach((infraInfo) => {
-                        filteredDong.forEach((dInfo) => {
-                            if (infraInfo.dong.includes(dInfo.dongName)) {
-                                temp.push(dInfo);
-                            }
-                        });
-                    });
-                    temp = [...new Set(temp)];
-                    filteredDong = temp;
-                }
-            });
-        }
+    //             if (!filteredDong.length) {
+    //                 console.log("if문 들어오기 확인");
+    //                 dataType[type].forEach((infraInfo) => {
+    //                     dongInfo.forEach((dInfo) => {
+    //                         if (infraInfo.dong.includes(dInfo.dongName)) {
+    //                             filteredDong.push(dInfo);
+    //                         }
+    //                     });
+    //                 });
+    //                 filteredDong = [...new Set(filteredDong)];
+    //                 console.log("filteredDong 확인", filteredDong);
+    //             } else {
+    //                 console.log("else들어오기 확인");
+    //                 let temp = [];
+    //                 dataType[type].forEach((infraInfo) => {
+    //                     filteredDong.forEach((dInfo) => {
+    //                         if (infraInfo.dong.includes(dInfo.dongName)) {
+    //                             temp.push(dInfo);
+    //                         }
+    //                     });
+    //                 });
+    //                 temp = [...new Set(temp)];
+    //                 filteredDong = temp;
+    //             }
+    //         });
+    //     }
 
-        console.log("filter 됐는지 확인", filteredDong);
-        setSelectedDong(filteredDong);
-    };
+    //     console.log("filter 됐는지 확인", filteredDong);
+    //     setSelectedDong(filteredDong);
+    // };
 
     // 사이드바 열어주는 함수
     const sideBarOpen = () => {
@@ -382,244 +420,292 @@ const map = () => {
         }
     };
     return (
-        <Layout>
-            <MapWrap>
-                <SideWrap>
-                    <MenuBtn ref={menuBtn} onClick={sideBarOpen}>
-                        <CgMenuRound size="30" color="red" />
-                    </MenuBtn>
-                    <SideBar ref={sideBar}>
-                        <CloseBtn onClick={sideBarClose}>
-                            <IoMdCloseCircle size="20" />
-                        </CloseBtn>
-                        <Category>
-                            <CateTitle>문화시설</CateTitle>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, libClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, libClickCnt.current)} ref={libBtn} onClick={() => infraBtnClick(libClickCnt.current, "library")}>
-                                도서관
-                            </Infra>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, parkClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, parkClickCnt.current)} ref={parkBtn} onClick={() => infraBtnClick(parkClickCnt.current, "park")}>
-                                공원
-                            </Infra>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, marClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, marClickCnt.current)} ref={marBtn} onClick={() => infraBtnClick(marClickCnt.current, "market")}>
-                                전통시장
-                            </Infra>
-                        </Category>
-                        <Category>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, kidsClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, kidsClickCnt.current)} ref={kidsBtn} onClick={() => infraBtnClick(kidsClickCnt.current, "kids")}>
-                                키즈카페
-                            </Infra>
-                        </Category>
-                        <Category>
-                            <CateTitle>의료시설</CateTitle>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, hosClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, hosClickCnt.current)} ref={hosBtn} onClick={() => infraBtnClick(hosClickCnt.current, "hospital")}>
-                                응급실
-                            </Infra>
-                        </Category>
-                        <Category>
-                            <CateTitle>체육시설</CateTitle>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, gymClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, gymClickCnt.current)} ref={gymBtn} onClick={() => infraBtnClick(gymClickCnt.current, "gym")}>
-                                체육관
-                            </Infra>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, swimClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, swimClickCnt.current)} ref={swimBtn} onClick={() => infraBtnClick(swimClickCnt.current, "swim")}>
-                                수영장
-                            </Infra>
-                        </Category>
-                        <Category>
-                            <CateTitle>복지시설</CateTitle>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, rehClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, rehClickCnt.current)} ref={rehBtn} onClick={() => infraBtnClick(rehClickCnt.current, "reh")}>
-                                재활센터
-                            </Infra>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, oldClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, oldClickCnt.current)} ref={oldBtn} onClick={() => infraBtnClick(oldClickCnt.current, "old")}>
-                                노인복지관
-                            </Infra>
-                        </Category>
-                        <Category>
-                            <CateTitle>교육시설</CateTitle>
-                            <Infra onMouseOver={(e) => handleMouseOver(e, colClickCnt.current)} onMouseOut={(e) => handleMouseOut(e, colClickCnt.current)} ref={colBtn} onClick={() => infraBtnClick(colClickCnt.current, "college")}>
-                                대학교
-                            </Infra>
-                        </Category>
-                    </SideBar>
-                </SideWrap>
+        <MapLayOut>
+            <Container>
+                <MapWrap>
+                    <SideWrap>
+                        <MenuBtn ref={menuBtn} onClick={sideBarOpen}>
+                            <CgMenuRound size="30" />
+                        </MenuBtn>
 
-                <Map
-                    id={`map`}
-                    center={{
-                        lat: 37.566826,
-                        lng: 126.9786567,
-                    }}
-                    style={{
-                        width: "100%",
-                        height: "100vh",
-                        position: "absolute",
-                    }}
-                    level={9}
-                    onCreate={setMap}
-                    onMouseMove={(_map, mouseEvent) =>
-                        setMousePosition({
-                            lat: mouseEvent.latLng.getLat(),
-                            lng: mouseEvent.latLng.getLng(),
-                        })
-                    }
-                >
-                    {selectedDong.map((path, idx) => (
-                        <Polygon key={idx} path={path.positions} strokeWeight={2} strokeColor={"red"} strokeOpacity={0.8} strokeStyle={"solid"} fillColor={path.isMouseover ? "pink" : "#ffe6ea"} fillOpacity={0.7} onMouseover={() => (path.isMouseover = true)} onMouseout={() => (path.isMouseover = false)} />
-                    ))}
-                    {dongInfo.findIndex((v) => v.isMouseover) !== -1 && (
-                        <CustomOverlayMap position={mousePosition}>
-                            <DivArea>{dongInfo.find((v) => v.isMouseover).dongName}</DivArea>
-                        </CustomOverlayMap>
-                    )}
+                        <SideBar ref={sideBar}>
+                            <CloseBtn onClick={sideBarClose}>
+                                <IoMdCloseCircle size="20" />
+                            </CloseBtn>
 
-                    {libInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/library_marker.png",
-                                size: {
-                                    width: 30,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {parkInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/park_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {marInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/market_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {kidsInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/kids_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {hosInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/hospital_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {gymInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/gym_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {swimInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/swim_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {rehInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/reh_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {oldInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/old_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                    {colInfo.map((row, idx) => (
-                        <MapMarker
-                            key={idx}
-                            position={row.position}
-                            title={row.name}
-                            image={{
-                                src: "/college_marker.png",
-                                size: {
-                                    width: 31,
-                                    height: 35,
-                                },
-                            }}
-                        ></MapMarker>
-                    ))}
-                </Map>
-            </MapWrap>
+                            <Category>
+                                <CateTitle>문화시설</CateTitle>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, libClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, libClickCnt.current)}
+                                    ref={libBtn}
+                                    onClick={() => infraBtnClick(libClickCnt.current, "library")}
+                                >
+                                    도서관
+                                </Infra>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, parkClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, parkClickCnt.current)}
+                                    ref={parkBtn}
+                                    onClick={() => infraBtnClick(parkClickCnt.current, "park")}
+                                >
+                                    공원
+                                </Infra>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, marClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, marClickCnt.current)}
+                                    ref={marBtn}
+                                    onClick={() => infraBtnClick(marClickCnt.current, "market")}
+                                >
+                                    전통시장
+                                </Infra>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, kidsClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, kidsClickCnt.current)}
+                                    ref={kidsBtn}
+                                    onClick={() => infraBtnClick(kidsClickCnt.current, "kids")}
+                                >
+                                    키즈카페
+                                </Infra>
+                            </Category>
 
-            <WaitBox ref={waitBox}>
-                <Spin tip="Loading">
-                    <div />
-                </Spin>
-            </WaitBox>
-        </Layout>
+                            <Category>
+                                <CateTitle>의료시설</CateTitle>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, hosClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, hosClickCnt.current)}
+                                    ref={hosBtn}
+                                    onClick={() => infraBtnClick(hosClickCnt.current, "hospital")}
+                                >
+                                    응급실
+                                </Infra>
+                            </Category>
+
+                            <Category>
+                                <CateTitle>체육시설</CateTitle>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, gymClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, gymClickCnt.current)}
+                                    ref={gymBtn}
+                                    onClick={() => infraBtnClick(gymClickCnt.current, "gym")}
+                                >
+                                    체육관
+                                </Infra>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, swimClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, swimClickCnt.current)}
+                                    ref={swimBtn}
+                                    onClick={() => infraBtnClick(swimClickCnt.current, "swim")}
+                                >
+                                    수영장
+                                </Infra>
+                            </Category>
+
+                            <Category>
+                                <CateTitle>복지시설</CateTitle>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, rehClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, rehClickCnt.current)}
+                                    ref={rehBtn}
+                                    onClick={() => infraBtnClick(rehClickCnt.current, "reh")}
+                                >
+                                    재활센터
+                                </Infra>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, oldClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, oldClickCnt.current)}
+                                    ref={oldBtn}
+                                    onClick={() => infraBtnClick(oldClickCnt.current, "old")}
+                                >
+                                    노인복지관
+                                </Infra>
+                            </Category>
+
+                            <Category>
+                                <CateTitle>교육시설</CateTitle>
+                                <Infra
+                                    onMouseOver={(e) => handleMouseOver(e, colClickCnt.current)}
+                                    onMouseOut={(e) => handleMouseOut(e, colClickCnt.current)}
+                                    ref={colBtn}
+                                    onClick={() => infraBtnClick(colClickCnt.current, "college")}
+                                >
+                                    대학교
+                                </Infra>
+                            </Category>
+                        </SideBar>
+                    </SideWrap>
+
+                    <Map
+                        id={`map`}
+                        center={{
+                            lat: 37.566826,
+                            lng: 126.9786567,
+                        }}
+                        style={{
+                            width: "100%",
+                            height: "calc(100vh - 30px)",
+                            position: "absolute",
+                        }}
+                        level={9}
+                        maxLevel={9}
+                        onCreate={setMap}
+                        onMouseMove={(_map, mouseEvent) =>
+                            setMousePosition({
+                                lat: mouseEvent.latLng.getLat(),
+                                lng: mouseEvent.latLng.getLng(),
+                            })
+                        }
+                    >
+                        <Polygon
+                            path={seoulData} // 그려질 다각형의 좌표 배열
+                            strokeWeight={2} // 선의 두께
+                            strokeColor={"#004c80"} // 선의 색깔
+                            strokeOpacity={0.8} // 선의 불투명도, 1에서 0 사이의 값이며 0에 가까울수록 투명
+                            strokeStyle={"solid"} // 선의 스타일
+                            fillColor={"#fff"} // 채우기 색깔
+                            fillOpacity={0.7} // 채우기 불투명도
+                        />
+
+                        {libInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/library_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {parkInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/park_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {marInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/market_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {kidsInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/kids_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {hosInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/hospital_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {gymInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/gym_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {swimInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/swim_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {rehInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/reh_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {oldInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/old_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                        {colInfo.map((row, idx) => (
+                            <MapMarker
+                                key={idx}
+                                position={row.position}
+                                title={row.name}
+                                image={{
+                                    src: "/college_marker.png",
+                                    size: {
+                                        width: 30,
+                                    },
+                                }}
+                            ></MapMarker>
+                        ))}
+                    </Map>
+                </MapWrap>
+
+                <WaitBox ref={waitBox}>
+                    <Spin tip="Loading">
+                        <div />
+                    </Spin>
+                </WaitBox>
+            </Container>
+        </MapLayOut>
     );
 };
 

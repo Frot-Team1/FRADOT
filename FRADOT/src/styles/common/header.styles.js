@@ -13,7 +13,7 @@ export const HeaderWrap = styled.div`
     }
 `;
 export const HeaderDiv = styled.div`
-    width: 1500px;
+    width: 1200px;
     display: flex;
     align-items: center;
     margin: 0 auto;
@@ -22,8 +22,8 @@ export const Img = styled.div`
     display: inline-block;
     width: 200px;
     height: 100px;
-    margin: 0 80px;
-    cursor: pointer;
+    margin: 0 25px 0 80px;
+    cursor: ${(props) => props.isHeaderLogo && "pointer"};
     background: url("/logo.png") no-repeat center / contain;
 `;
 export const Menu2 = styled.div`

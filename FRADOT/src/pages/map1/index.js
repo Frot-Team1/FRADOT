@@ -390,12 +390,12 @@ const map = () => {
                 <MapWrap>
                     <SideWrap>
                         <MenuBtn ref={menuBtn} onClick={sideBarOpen}>
-                            <CgMenuRound size="30" className="icon" color="red" />
+                            <CgMenuRound size="30" />
                         </MenuBtn>
 
                         <SideBar ref={sideBar}>
                             <CloseBtn onClick={sideBarClose}>
-                                <IoMdCloseCircle size="25" />
+                                <IoMdCloseCircle size="20" />
                             </CloseBtn>
 
                             <Category>
