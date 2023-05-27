@@ -1,22 +1,5 @@
 import LayOut from "@/components/common/layout";
-import {
-    ContentWrap,
-    Cover,
-    ExpalinTab,
-    ExplainContainer,
-    ExplainItem,
-    ExplainItemWrap,
-    ExplainText,
-    ExplainWrap,
-    Img,
-    Tab,
-    Ocean,
-    ShortCutBtn,
-    StepText,
-    Text,
-    TopContainer,
-    Wave,
-} from "@/styles/main.styles";
+import { ContentWrap, Cover, ExpalinTab, ExplainContainer, ExplainItem, ExplainItemWrap, ExplainText, ExplainWrap, Img, Tab, Ocean, ShortCutBtn, StepText, Text, TopContainer, Wave } from "@/styles/main.styles";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -62,7 +45,7 @@ const MainPage = () => {
     };
 
     const mapBtn2 = () => {
-        // router.push("/map2");
+        router.push("/map2");
     };
 
     return (
@@ -137,10 +120,7 @@ const MainPage = () => {
                                 <Img></Img>
                                 <StepText>
                                     <h2>Step 3.</h2>
-                                    <p>
-                                        특정 동을 선택하면 인프라찾기로 이동하여 해당 동에 모여있는 다양한 인프라 시설을 확인할 수
-                                        있습니다.
-                                    </p>
+                                    <p>특정 동을 선택하면 인프라찾기로 이동하여 해당 동에 모여있는 다양한 인프라 시설을 확인할 수 있습니다.</p>
                                 </StepText>
                             </ExplainItem>
                         </ExplainItemWrap>
