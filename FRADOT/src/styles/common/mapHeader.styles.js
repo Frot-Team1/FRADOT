@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
 
 export const HeaderWrap = styled.div`
+    transform: translateY(-60px);
+    transition: 500ms;
     width: 100%;
-    height: 30px;
+    height: 60px;
     display: flex;
     position: sticky;
     top: 0;
@@ -20,14 +22,14 @@ export const HeaderDiv = styled.div`
 `;
 export const Img = styled.div`
     display: inline-block;
-    width: 100px;
+    width: 130px;
     height: 30px;
     margin: 0 40px 0 200px;
     cursor: pointer;
     background: url("/logo.png") no-repeat center / contain;
 `;
 export const Menu2 = styled.div`
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 500;
     margin-left: 80px;
     cursor: pointer;
