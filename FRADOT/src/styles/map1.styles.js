@@ -2,8 +2,26 @@ import styled from "@emotion/styled";
 
 export const Container = styled.div`
     display: flex;
+    background-color: blue;
 `;
 export const MapWrap = styled.div``;
+export const HeaderWrap = styled.div`
+    position: absolute;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    cursor: pointer;
+`;
+export const Bar = styled.div`
+    position: absolute;
+    width: 70px;
+    height: 7px;
+    border-radius: 10px;
+    background-color: #004c80;
+`;
 export const SideWrap = styled.div`
     position: absolute;
 `;
@@ -26,8 +44,9 @@ export const SideBar = styled.div`
     height: calc(100vh - 100px);
     background-color: #f0f8ff;
     transition: 1000ms;
-    z-index: 10;
+    z-index: 100;
     margin: 30px;
+    margin-top: 65px;
     border-radius: 15px;
     padding: 20px;
     box-shadow: 9px 10px 10px 7px rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

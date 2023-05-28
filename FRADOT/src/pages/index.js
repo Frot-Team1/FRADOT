@@ -1,5 +1,23 @@
 import LayOut from "@/components/common/layout";
-import { ContentWrap, Cover, ExpalinTab, ExplainContainer, ExplainItem, ExplainItemWrap, ExplainText, ExplainWrap, Img, Tab, Ocean, ShortCutBtn, StepText, Text, TopContainer, Wave } from "@/styles/main.styles";
+import {
+    ContentWrap,
+    Cover,
+    ExpalinTab,
+    ExplainContainer,
+    ExplainItem,
+    ExplainItemWrap,
+    ExplainText,
+    ExplainWrap,
+    Img,
+    Tab,
+    Ocean,
+    ShortCutBtn,
+    StepText,
+    Text,
+    TopContainer,
+    Wave,
+} from "@/styles/main.styles";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -64,13 +82,6 @@ const MainPage = () => {
 
             <ExplainContainer>
                 <ExpalinTab>
-                    {/* <li>
-                        <Tab>동네찾기 알아보기</Tab>
-                    </li>
-                    <li>
-                        <Tab>인프라찾기 알아보기</Tab>
-                    </li> */}
-
                     {/* 2개의 탭 생성 */}
                     {tab.map((data, idx) => (
                         <li key={idx}>
@@ -95,32 +106,28 @@ const MainPage = () => {
                             <p>
                                 원하는 인프라 시설을 선택하여
                                 <br />
-                                해당 인프라가 모여있는 동네를 찾아보세요!
+                                해당 인프라 시설이 모여있는 동네를 찾아보세요!
                             </p>
                         </ExplainText>
 
                         <ExplainItemWrap>
                             <ExplainItem>
-                                <Img></Img>
+                                <Img>
+                                    <Image src="/map1-1.jpg" width={675} height={340} alt="map1-1"></Image>
+                                </Img>
                                 <StepText>
                                     <h2>Step 1.</h2>
-                                    <p>원하는 인프라 시설을 선택합니다.</p>
+                                    <p>원하는 인프라 시설을 선택하여 검색합니다.</p>
                                 </StepText>
                             </ExplainItem>
 
                             <ExplainItem>
-                                <Img></Img>
+                                <Img>
+                                    <Image src="/map1-2.jpg" width={675} height={340} alt="map1-2"></Image>
+                                </Img>
                                 <StepText>
                                     <h2>Step 2.</h2>
-                                    <p>해당 인프라 시설들이 모여있는 지역을 확인합니다.</p>
-                                </StepText>
-                            </ExplainItem>
-
-                            <ExplainItem>
-                                <Img></Img>
-                                <StepText>
-                                    <h2>Step 3.</h2>
-                                    <p>특정 동을 선택하면 인프라찾기로 이동하여 해당 동에 모여있는 다양한 인프라 시설을 확인할 수 있습니다.</p>
+                                    <p>붉게 표시된 지역에 마우스를 올려 해당 인프라 시설들이 모여있는 동을 확인합니다.</p>
                                 </StepText>
                             </ExplainItem>
                         </ExplainItemWrap>
@@ -136,9 +143,9 @@ const MainPage = () => {
                         <ExplainText>
                             <h2>인프라찾기란?</h2>
                             <p>
-                                특정 지역을 검색하여
+                                원하는 인프라 시설을 선택하여
                                 <br />
-                                해당 지역에 모여있는 인프라 시설을 살펴보세요!
+                                해당 인프라 시설의 위치를 확인해보세요!
                             </p>
                         </ExplainText>
 
@@ -146,17 +153,21 @@ const MainPage = () => {
                             <ExplainItem>
                                 <StepText>
                                     <h2>Step 1.</h2>
-                                    <p>인프라 시설을 확인하고 싶은 지역을 검색합니다.</p>
+                                    <p>원하는 인프라 시설을 선택합니다.</p>
                                 </StepText>
-                                <Img></Img>
+                                <Img>
+                                    <Image src="/map2-1.jpg" width={675} height={340} alt="map2-1"></Image>
+                                </Img>
                             </ExplainItem>
 
                             <ExplainItem>
                                 <StepText>
                                     <h2>Step 2.</h2>
-                                    <p>해당 지역에 모여있는 인프라 시설들을 확인합니다.</p>
+                                    <p>해당 시설의 위치가 표시되면 마커에 마우스를 올려 시설명을 확인합니다.</p>
                                 </StepText>
-                                <Img></Img>
+                                <Img>
+                                    <Image src="/map2-2.jpg" width={675} height={340} alt="map2-2"></Image>
+                                </Img>
                             </ExplainItem>
                         </ExplainItemWrap>
 

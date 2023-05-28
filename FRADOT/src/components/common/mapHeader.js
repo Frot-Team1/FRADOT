@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
+import { forwardRef } from "react";
 import { HeaderDiv, HeaderWrap, Img, Menu2 } from "@/styles/common/mapHeader.styles";
 
-const mapHeader = () => {
+const MapHeader = forwardRef((props, ref) => {
     const router = useRouter();
 
     const homeBtn = () => {
@@ -21,9 +22,9 @@ const mapHeader = () => {
     };
 
     return (
-        <HeaderWrap>
+        <HeaderWrap ref={ref}>
             <HeaderDiv>
-                <Img onClick={homeBtn}></Img>
+                <Img onClick={homeBtn} isHeaderLogo></Img>
 
                 <Menu2>
                     <p onClick={map1Btn}>동네찾기</p>
@@ -37,6 +38,6 @@ const mapHeader = () => {
             </HeaderDiv>
         </HeaderWrap>
     );
-};
+});
 
-export default mapHeader;
+export default MapHeader;

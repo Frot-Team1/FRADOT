@@ -22,7 +22,7 @@ export const Img = styled.div`
     display: inline-block;
     width: 200px;
     height: 100px;
-    margin: 0 25px 0 80px;
+    margin: ${(props) => (props.isHeaderLogo ? "0 25px 0 80px" : "0 auto")};
     cursor: ${(props) => props.isHeaderLogo && "pointer"};
     background: url("/logo.png") no-repeat center / contain;
 `;

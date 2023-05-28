@@ -17,11 +17,12 @@ export const Line = styled.div`
 
 export const Logo2 = styled.div`
     font-size: 50px;
+    text-align: center;
     /* margin-bottom: 30px; */
 `;
 export const Info = styled.div`
     display: flex;
-    width: 300px;
+    width: 340px;
     padding-top: 40px;
     height: 130px;
     text-align: center;
@@ -31,6 +32,6 @@ export const Info = styled.div`
     font-size: 13px;
     bottom: 0px;
     white-space: pre-line;
-    gap: -0px 17px;
+    gap: 0px 17px;
 `;
 export const In = styled.div``;
