@@ -16,6 +16,7 @@ import {
     Text,
     TopContainer,
     Wave,
+    ImgWrap,
 } from "@/styles/main.styles";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
@@ -112,9 +113,12 @@ const MainPage = () => {
 
                         <ExplainItemWrap>
                             <ExplainItem>
-                                <Img>
-                                    <Image src="/map1-1.jpg" width={675} height={340} alt="map1-1"></Image>
-                                </Img>
+                                <ImgWrap>
+                                    <Img src="/map1-1.jpg">
+                                        {/* <Image src="/map1-1.jpg" width={675} height={340} alt="map1-1"></Image> */}
+                                    </Img>
+                                </ImgWrap>
+
                                 <StepText>
                                     <h2>Step 1.</h2>
                                     <p>원하는 인프라 시설을 선택하여 검색합니다.</p>
@@ -122,9 +126,11 @@ const MainPage = () => {
                             </ExplainItem>
 
                             <ExplainItem>
-                                <Img>
-                                    <Image src="/map1-2.jpg" width={675} height={340} alt="map1-2"></Image>
-                                </Img>
+                                <ImgWrap>
+                                    <Img src="/map1-2.jpg">
+                                        {/* <Image src="/map1-2.jpg" width={675} height={340} alt="map1-2"></Image> */}
+                                    </Img>
+                                </ImgWrap>
                                 <StepText>
                                     <h2>Step 2.</h2>
                                     <p>붉게 표시된 지역에 마우스를 올려 해당 인프라 시설들이 모여있는 동을 확인합니다.</p>
@@ -155,9 +161,11 @@ const MainPage = () => {
                                     <h2>Step 1.</h2>
                                     <p>원하는 인프라 시설을 선택합니다.</p>
                                 </StepText>
-                                <Img>
-                                    <Image src="/map2-1.jpg" width={675} height={340} alt="map2-1"></Image>
-                                </Img>
+                                <ImgWrap>
+                                    <Img src="/map2-1.jpg">
+                                        {/* <Image src="/map2-1.jpg" width={675} height={340} alt="map2-1"></Image> */}
+                                    </Img>
+                                </ImgWrap>
                             </ExplainItem>
 
                             <ExplainItem>
@@ -165,9 +173,11 @@ const MainPage = () => {
                                     <h2>Step 2.</h2>
                                     <p>해당 시설의 위치가 표시되면 마커에 마우스를 올려 시설명을 확인합니다.</p>
                                 </StepText>
-                                <Img>
-                                    <Image src="/map2-2.jpg" width={675} height={340} alt="map2-2"></Image>
-                                </Img>
+                                <ImgWrap>
+                                    <Img src="/map2-2.jpg">
+                                        {/* <Image src="/map2-2.jpg" width={675} height={340} alt="map2-2"></Image> */}
+                                    </Img>
+                                </ImgWrap>
                             </ExplainItem>
                         </ExplainItemWrap>
 

@@ -188,14 +188,19 @@ export const ExplainItem = styled.li`
         margin-bottom: 0px;
     }
 `;
-
+export const ImgWrap = styled.div`
+    width: 700px;
+    height: 340px;
+    overflow: hidden;
+    margin: 0 auto;
+`;
 export const Img = styled.div`
     background-image: ${(props) => `url(${props.src})`};
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    width: 700px;
-    height: 340px;
+    width: 100%;
+    height: 100%;
     /* background-color: rgb(200, 200, 200); */
     box-shadow: 0 25px 98px 0 rgba(0, 0, 0, 0.1);
 `;

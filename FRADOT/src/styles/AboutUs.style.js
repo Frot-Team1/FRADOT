@@ -28,7 +28,7 @@ export const TitleContainer = styled.div`
     width: 100%;
     height: 140px;
     padding: 0 0 0 20px;
-    background-image: url("/AboutUs.jpg");
+    /* background-image: url("/logo2.jpg"); */
     background-size: cover;
     background-position: center;
 
@@ -70,27 +70,44 @@ export const ProjecInformationContainer = styled.div`
 // logo
 export const LogoImgContainer = styled.div`
     height: 300px;
+    width: 100%;
     margin: 10px 20px 10px 20px;
-    padding: 0 20px 0 20px;
-    background-color: #e9e9e9;
+    background-color: #ffffff;
     display: flex;
+    border: 1px solid black;
 `;
 
 export const Logo = styled.div`
     width: 50%;
     height: 100%;
+    overflow: hidden;
+    margin: 0 auto;
+    border: 1px solid black;
     & p {
         text-align: center;
         color: #a1a1a1;
+        bottom: 0px;
     }
 `;
 
-export const LogoImg_1 = styled.img`
-    background-color: white;
+export const LogoImg_1 = styled.div`
+    background-image: url("/logo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 70%;
+    height: 100px;
+    margin: 80px auto;
 `;
 
-export const LogoImg_2 = styled.img`
-    background-color: white;
+export const LogoImg_2 = styled.div`
+    background-image: url("/gridlogo.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 70%;
+    height: 100px;
+    margin: 80px auto;
 `;
 
 // color
