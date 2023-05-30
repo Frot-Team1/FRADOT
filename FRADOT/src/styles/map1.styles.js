@@ -28,6 +28,8 @@ export const SideWrap = styled.div`
 export const MenuBtn = styled.div`
     visibility: hidden;
     position: absolute;
+    top: 55px;
+    left: 10px;
     z-index: 100;
     margin: 10px 10px;
     cursor: pointer;

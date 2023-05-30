@@ -317,13 +317,13 @@ const map = () => {
     const click2 = () => {
         let filteredDong = [];
         if (selectedType) {
-            selectedType.forEach((type) => {
+            selectedType.forEach((type, index) => {
                 // console.log("type foreach 돌아가는지 확인", type, dataType[type]);
                 // console.log("donhInfo 배열확인", dongInfo);
 
                 // console.log("확인", dataType[type])
 
-                if (!filteredDong.length) {
+                if (!filteredDong.length && index === 0) {
                     // console.log("if문 들어오기 확인");
                     dataType[type].forEach((infraInfo) => {
                         dongInfo.forEach((dInfo) => {
